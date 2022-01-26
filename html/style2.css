@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 20px 1fr 20px;
+    grid-template-rows: [head] 150px [img] auto [mokuji] auto [sozai] auto [cap1] auto [cap2] auto [cap3] auto [cap4] auto [foot] 150px;
+    row-gap: 10px;
+    font-family: sans-serif;
+}
+
+body>* {
+    grid-column: 2 / -2;
+}
+
+header {
+    grid-row: head;
+    justify-self: left;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    font-family: 'Kaushan Script', cursive;
+}
+
+span {
+    font-size: 12px;
+}
+
+nav {
+    grid-row: head;
+    justify-self: right;
+    align-self: end;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+    text-align: center;
+    column-gap: 20px;
+}
+
+nav a {
+    color: #444444;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+figure img {
+    object-fit: cover;
+    vertical-align: bottom;
+    filter: brightness(70%);
+    z-index: -1;
+    position: relative;
+}
+
+figure {
+    position: relative;
+    grid-row: img;
+}
+
+figure p {
+    position: absolute;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2em;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 30px;
+    background-color: rgba( 255, 255, 255, 0.45);
+    color: #ffffff;
+    text-shadow: 0 0 5px #444444;
+    width: 130px;
+}
+
+.mokuji {
+    border: 1px black solid;
+    border: double;
+}
+
+.sozai {
+    grid-row: sozai;
+}
+
+.kigu img {
+    width: 164px;
+    height: auto;
+}
+
+.cap1 {
+    grid-row: cap1;
+}
+
+.cap2 {
+    grid-row: cap2;
+}
+
+.cap3 {
+    grid-row: cap3;
+}
+
+.cap4 {
+    grid-row: cap4;
+}
+
+footer {
+    grid-row: foot;
+    align-self: center;
+    justify-self: center;
+    font-size: 13px;
+    font-family: 'Raleway', sans-serif;
+}
+
+
+/* フッターのバー*/
+
+body::after {
+    content: "";
+    background-color: #eeeeee;
+    grid-column: 1 / -1;
+    grid-row: foot;
+    z-index: -1;
+}
