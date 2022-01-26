@@ -6,7 +6,6 @@ import base64
 import requests
 from PIL import Image 
 import imagehash
-import threading
 
 img = './img/cam.jpg'
 
@@ -39,6 +38,7 @@ def job():
     print(hash - otherhash)
 
     global stay
+    
     stay = hash - otherhash
 
     if stay <= 5:
