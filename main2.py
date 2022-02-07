@@ -11,7 +11,7 @@ img = './img/cam.jpg'
 
 url = 'https://script.google.com/macros/s/AKfycby4JdB9hbkZLhTUx6T5lvFnUj7RR0mpktNHzJvoHw1tDSTW8uMQhkYJ_xYK_jg3rvA3/exec'
 
-deviceid=0 # it depends on the order of USB connection. 
+deviceid=0
 cap = cv2.VideoCapture(deviceid)
 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -20,7 +20,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 def upload(img):
     f = open(img, 'rb')
     b64_img=base64.b64encode(f.read())
-    payload = {'timestamp':datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'temperature':stay, 'humidity':0.0, 'pressure':0.0, 'file': b64_img}
+    payload = {'timestamp':datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'temperature':staytime, 'humidity':0.0, 'pressure':0.0, 'file': b64_img}
 
     res = requests.post(url, data=payload)
 
@@ -30,25 +30,27 @@ def job():
     cv2.imwrite(img, frame) 
     print(fname + " is created.")
 
-    # 基本画像と動体画像の比較
+    # 基本画像と撮影画像の比較
     hash = imagehash.average_hash(Image.open('./img2/default.jpg')) 
 
     otherhash = imagehash.average_hash(Image.open('./img/cam.jpg')) 
 
     print(hash - otherhash)
 
-    global stay
-    
+    global staytime
+
     stay = hash - otherhash
+    staytime = ""
 
     if stay <= 5:
-        stay = 0
+        staytime = 0
     else:
-        pass
+        if stay >= 6:
+            staytime = 1
 
     upload(img)
 
-#do job every 10 seconds
+# に一回写真を撮る
 schedule.every(1/6).minutes.do(job)
 
 # 基本となる画像の保存
